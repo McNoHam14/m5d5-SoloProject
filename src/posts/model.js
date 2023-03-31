@@ -1,10 +1,11 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db.js";
+import UsersModel from "../users/model.js";
 
-// (id, role, company, startDate, endDate, description, area, image)
+// (id, text, image)
 
-const PostsModel = sequelize.define("experience", {
-  postsId: {
+const PostsModel = sequelize.define("posts", {
+  postId: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
@@ -17,6 +18,13 @@ const PostsModel = sequelize.define("experience", {
   //     type: DataTypes.STRING(50),
   //     allowNull: false,
   // },
+});
+
+UsersModel.hasMany(PostsModel, {
+  foreignKey: { name: "userId", allowNull: false },
+});
+PostsModel.belongsTo(UsersModel, {
+  foreignKey: { name: "userId", allowNull: false },
 });
 
 export default PostsModel;

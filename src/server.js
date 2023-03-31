@@ -5,9 +5,14 @@ import { pgConnect } from "./db.js";
 import usersRouter from "./users/index.js";
 import experiencesRouter from "./experiences/index.js";
 import postsRouter from "./posts/index.js";
+import {
+  badRequestErrorHandler,
+  genericErrorHandler,
+  notFoundErrorHandler,
+} from "./errorHandlers.js";
 
 const server = Express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 // Middlewares
 server.use(cors());
@@ -15,10 +20,13 @@ server.use(Express.json());
 
 // Endpoints
 server.use("/users", usersRouter);
-server.use("/", experiencesRouter);
-server.use("/", postsRouter);
+server.use("/experiences", experiencesRouter);
+server.use("/posts", postsRouter);
 
 // Error Handlers
+server.use(badRequestErrorHandler);
+server.use(notFoundErrorHandler);
+server.use(genericErrorHandler);
 
 await pgConnect();
 

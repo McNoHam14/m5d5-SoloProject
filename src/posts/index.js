@@ -1,10 +1,12 @@
 import express from "express";
-import postsModel from "./model.js";
+import PostsModel from "./model.js";
 
 const postsRouter = express.Router();
 
 postsRouter.post("/", async (req, res, next) => {
   try {
+    const { postId } = await PostsModel.create(req.body);
+    res.status(201).send({ postId });
   } catch (error) {
     next(error);
   }
