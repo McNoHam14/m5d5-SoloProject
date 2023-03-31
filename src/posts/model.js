@@ -14,10 +14,10 @@ const PostsModel = sequelize.define("posts", {
     type: DataTypes.STRING(120),
     allowNull: false,
   },
-  // image: {
-  //     type: DataTypes.STRING(50),
-  //     allowNull: false,
-  // },
+  image: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+  },
 });
 
 UsersModel.hasMany(PostsModel, {
